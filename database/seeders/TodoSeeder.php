@@ -21,7 +21,7 @@ class TodoSeeder extends Seeder
         $todo->todo = "Ali";
         $todo->description = "Description Ali";
         $todo->deadline = "26 April 2024";
-        $todo->status = "Berjalan";
+        $todo->status = "On Progress";
         $todo->user_id = "1";
         $todo->category_id = "1";
         $todo->priority_id = "1";
@@ -31,7 +31,7 @@ class TodoSeeder extends Seeder
         $todo->todo = "Todo 2";
         $todo->description = "Description Todo 2";
         $todo->deadline = "26 April 2024";
-        $todo->status = "Berjalan";
+        $todo->status = "On Progress";
         $todo->user_id = "2";
         $todo->category_id = "1";
         $todo->priority_id = "1";

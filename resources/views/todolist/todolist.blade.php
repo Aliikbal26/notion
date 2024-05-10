@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container col-xl-10 col-xxl-8 px-4 py-5">
-
+    <h2 class="text-center">Tambah Todo List</h2>
     @if(isset($error))
     <div class="row">
         <div class="alert alert-danger" role="alert">
@@ -13,23 +13,18 @@
     </div>
     @endif
 
-    <div class="row align-items-center g-lg-5 py-5">
-        <div class="col-lg-7 text-center text-lg-start">
-            <h1 class="display-4 fw-bold lh-1 mb-3">Todolist</h1>
-            <p class="col-lg-10 fs-4">by <a target="_blank" href="https://www.programmerzamannow.com/">Programmer Zaman
-                    Now</a></p>
-        </div>
-        <div class="col-md-10 mx-auto col-lg-5">
-            <form class="p-4 p-md-5 border rounded-3 bg-light" method="post" action="/todolist">
+    <div class="row align-items-center g-lg-5 py-3">
+        <div class="col-md-10 mx-auto col-lg-7">
+            <form class="p-3 p-md-3 border rounded-3 bg-light" method="post" action="/todolist">
                 @csrf
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" name="todo" placeholder="todo">
                     <label for="todo">Todo</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" name="description" placeholder="description">
+                    <!-- <input type="text" class="form-control" name="description" placeholder="description"> -->
+                    <textarea class="form-control" id="description" rows="3" name="description" placeholder="Description"></textarea>
                     <label for="description">Description</label>
-
                 </div>
                 <div class="form-floating mb-3">
                     <select name="priority" class="form-control" id="priority">
@@ -60,46 +55,48 @@
             <form id="deleteForm" method="post" style="display: none">
 
             </form>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">No</th>
-                        <th scope="col">Todo</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Deadline</th>
-                        <th scope="col">Priority</th>
-                        <th scope="col">Category</th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($todolist as $index=>$todo)
-                    <tr>
-                        <th scope="row">{{$index + 1}}</th>
-                        <td>{{$todo['todo']}}</td>
-                        <td>
-                            <span class="badge bg-success">{{$todo['status']}}</span>
-                        </td>
-                        <td>{{$todo['deadline']}}</td>
-                        <td>{{$todo['priority']['name']}}</td>
-                        <td>{{$todo['category']['name_category']}}</td>
-                        <td>
-                            <form action="/todolist/{{$todo['id']}}/edit" method="GET">
-                                @csrf
-                                <button class="w-100 btn btn-md btn-primary" type="submit">Edit</button>
-                            </form>
-                        </td>
-                        <td>
-                            <form action="/todolist/{{$todo['id']}}/delete" method="post">
-                                @csrf
-                                <button class="w-100 btn btn-md btn-danger" type="submit">Remove</button>
-                            </form>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            <div class="table-responsive-md">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Todo</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Deadline</th>
+                            <th scope="col">Priority</th>
+                            <th scope="col">Category</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($todolist as $index=>$todo)
+                        <tr>
+                            <th scope="row">{{$index + 1}}</th>
+                            <td>{{$todo['todo']}}</td>
+                            <td>
+                                <span class="badge bg-success">{{$todo['status']}}</span>
+                            </td>
+                            <td>{{$todo['deadline']}}</td>
+                            <td>{{$todo['priority']['name']}}</td>
+                            <td>{{$todo['category']['name_category']}}</td>
+                            <td>
+                                <form action="/todolist/{{$todo['id']}}/edit" method="GET">
+                                    @csrf
+                                    <button class="w-100 btn btn-md btn-primary" type="submit">Edit</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form action="/todolist/{{$todo['id']}}/delete" method="post">
+                                    @csrf
+                                    <button class="w-100 btn btn-md btn-danger" type="submit">Remove</button>
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
