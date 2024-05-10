@@ -1,0 +1,48 @@
+@startchen
+
+entity user {
+ id <<key>>
+ name
+ email
+ password
+}
+entity category {
+ id <<key>>
+ name 
+ description
+}
+entity priority{
+ id <<key>>
+ name
+ description
+}
+
+entity todos {
+ id <<key>>
+ name_todo
+ description
+ deadline
+ status
+ id_user
+ id_category
+ id_priority
+}
+
+relationship Menambah {
+}
+relationship Mengkategori {
+}
+relationship Mengprioritas {
+}
+
+user -1- Menambah
+Menambah -N- todos
+
+category -1- Mengkategori
+Mengkategori -N- todos
+
+priority -1- Mengprioritas
+Mengprioritas -N- todos
+
+
+@endchen

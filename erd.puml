@@ -1,0 +1,58 @@
+@startuml
+title 
+**Ali Ikbal**
+__Notion__
+"Ini adalah diagram UML sederhana Application todo list"
+end title
+entity user{
+    *id_user : int <PK>
+    --
+    *name : varchar
+    *email : varchar
+    *password : varchar
+}
+
+entity todos{
+    *id_todo : int <PK>
+    --
+    *name_todo : varchar
+    *description : varchar
+    *deadline : varchar
+    *status : varchar
+    created_at : timestamp
+    updated_at : timestamp
+    --
+    id_user : int<FK>
+    id_category : int<FK>
+    id_priority : int<FK>
+}
+entity category{
+    *id_category : int <PK>
+    --
+    *name_category : varchar
+    description : varchar
+    
+}
+
+entity priority{
+    *id_priority : int <PK>
+    --
+    *name_priority : varchar
+    description : varchar
+}
+
+
+user||--|{todos
+note on link
+Menambah
+end note
+category||--|{todos
+note on link
+Mengkategori
+end note
+priority||--|{todos
+note on link
+Mengprioritas
+end note
+
+@enduml
