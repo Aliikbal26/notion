@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -57,13 +59,41 @@ class UserController extends Controller
         return redirect("/");
     }
 
-    public function registrasi()
+    public function profile()
+    {
+        $userId = Auth::id();
+        $user = $this->userService->findUserById($userId);
+        return view("users.profile", [
+            "title" => "Profile $user->name",
+            "user" => $user
+        ]);
+    }
+
+    public function updateProfile(Request $request, string $userId)
     {
 
+        $user = $this->userService->findUserById($userId);
+        return view("users.updateUser", [
+            "title" => "Profile",
+            "user" => $user
+        ]);
+    }
+
+    public function updateUser(Request $request, string $userId)
+    {
+        $name = $request->input('name');
+
+        $this->userService->updateUser($userId, $name);
+        return redirect()->action([UserController::class, 'profile'])->with("success", "Data Berhasil update !");
+    }
+
+    public function registrasi()
+    {
         return view("users.registrasi", [
             "title" => "Registrasi",
         ]);
     }
+
     public function addUser(Request $request): Response|RedirectResponse
     {
         // Validasi berhasil, lakukan penyimpanan data
@@ -76,21 +106,21 @@ class UserController extends Controller
                 "title" => "Registrasi",
                 "error" => "Name is required !"
             ]);
-        } else if (empty($email)) {
+        } elseif (empty($email)) {
             return response()->view("users.registrasi", [
                 "title" => "Registrasi",
                 "error" => "Email is required !"
             ]);
-        } else if (empty($password)) {
+        } elseif (empty($password)) {
             return response()->view("users.registrasi", [
-                "title" => "Registras",
+                "title" => "Registrasi",
                 "error" => "Password is required !"
             ]);
         } else {
 
             $this->userService->addUser($name, $email, $password);
 
-            return redirect()->action([UserController::class, 'registrasi'])->with("success", "Data Berhasil dikirim");
+            return redirect()->action([UserController::class, 'registrasi'])->with("success", "Registrasi Berhasil");
         }
     }
 }

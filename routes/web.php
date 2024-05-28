@@ -38,6 +38,9 @@ Route::controller(\App\Http\Controllers\UserController::class)->group(function (
     Route::post('/registrasi', 'addUser')->middleware([\App\Http\Middleware\OnlyGuestMiddleware::class]);
     Route::post('/login', 'doLogin')->middleware([\App\Http\Middleware\OnlyGuestMiddleware::class]);
     Route::post('/logout', 'doLogout')->middleware([\App\Http\Middleware\OnlyMemberMiddleware::class]);
+    Route::get('/profile', 'profile')->middleware([\App\Http\Middleware\OnlyMemberMiddleware::class]);
+    Route::get('/user/{id}/updateProfile', 'updateProfile')->middleware([\App\Http\Middleware\OnlyMemberMiddleware::class]);
+    Route::put('/user/{id}/updateProfile', 'updateUser')->middleware([\App\Http\Middleware\OnlyMemberMiddleware::class]);
 });
 
 Route::controller(\App\Http\Controllers\TodoListController::class)
@@ -46,6 +49,7 @@ Route::controller(\App\Http\Controllers\TodoListController::class)
         Route::get('/todolist', 'todoList');
         Route::post('/todolist', 'addTodo');
         Route::post('/todolist/{id}/delete', 'removeTodo');
+        Route::post('/todolist/{id}/status', 'updateStatus');
         Route::get('/todolist/{id}/edit', 'editTodo');
         Route::put('/todolist/{id}/edit', 'updateTodo');
         Route::get('/todolist/{id}/details', 'findTodolist');

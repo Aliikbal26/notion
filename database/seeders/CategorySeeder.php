@@ -19,7 +19,12 @@ class CategorySeeder extends Seeder
         $category = new Category();
         $category->id = "1";
         $category->name_category = "School";
-        $category->description = "Description Category";
+        $category->description = "Description Category Untuk Sekolah";
+        $category->save();
+        $category = new Category();
+        $category->id = "2";
+        $category->name_category = "Work";
+        $category->description = "Description Category Untuk Pekerjaan";
         $category->save();
     }
 }

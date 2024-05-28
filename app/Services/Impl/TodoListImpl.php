@@ -45,18 +45,38 @@ class TodoListImpl implements TodoListService
     }
 
 
-    public function updateTodo(string $todoId, string $newTodo, string $description, string $status, string $deadline, string $priority_id, string $category_id)
+    public function updateTodo(string $todoId, ?string $newTodo, ?string $description, ?string $deadline, ?string $priority_id, ?string $category_id)
     {
         $todo = $this->findTodoById($todoId);
         if ($todo != null) {
             $todo->todo = $newTodo;
             $todo->description = $description;
-            $todo->status = $status;
             $todo->deadline = $deadline;
             $todo->priority_id = $priority_id;
             $todo->category_id = $category_id;
-
+            if ($deadline > now()->format('Y-m-d') && $todo->status = "Failed") {
+                $todo->status = 'On Progress';
+            }
             $todo->save();
+        }
+    }
+
+    public function updateStatus(string $todoId, string $newStatus)
+    {
+        $todo = $this->findTodoById($todoId);
+        if ($todo != null) {
+            $todo->status = $newStatus;
+            $todo->save();
+        }
+    }
+    public function deadline(string $todoId)
+    {
+        $deadline = Todo::where('deadline', '<', now()->format('Y-m-d'))
+            ->where('status', 'On Progress')
+            ->get();
+        foreach ($deadline as $deadlines) {
+            $deadlines->status = "Failed";
+            $deadlines->save();
         }
     }
 }

@@ -6,8 +6,11 @@ use App\Models\Category;
 use App\Models\Priority;
 use App\Models\Todo;
 use App\Models\User;
+use App\Services\CategoryService;
+use App\Services\PriorityService;
 use App\Services\TodoListService;
 use App\Services\UserService;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,29 +19,35 @@ class TodoListController extends Controller
 {
     //
     private TodoListService $todolistService;
+    private PriorityService $priorityService;
+    private CategoryService $categoryService;
 
-    public function __construct(TodoListService $todolistService)
+    public function __construct(TodoListService $todolistService, PriorityService $priorityService, CategoryService $categoryService)
     {
         $this->todolistService = $todolistService;
+        $this->priorityService = $priorityService;
+        $this->categoryService = $categoryService;
     }
+
+
 
     public function todo()
     {
         $todolist = $this->todolistService->getTodolist();
-        $user = Auth::user()->name;
+        $id = Auth::id();
+        $user = User::query()->where(['id' => $id])->find($id);
         return response()->view("template.landingPage", [
             "title" => "Home",
             "todolist" => $todolist,
-            "name" => $user
+            "name" => $user,
         ]);
     }
 
     public function todoList(Request $request)
     {
         $todolist = $this->todolistService->getTodolist();
-
-        $prioritas = Priority::all();
-        $category = Category::all();
+        $prioritas = $this->priorityService->getPriority();
+        $category = $this->categoryService->getCategory();
         return response()->view("todolist.todolist", [
             "title" => "Todolist",
             "todolist" => $todolist,
@@ -68,13 +77,13 @@ class TodoListController extends Controller
 
         $this->todolistService->saveTodo($todo, $description, $deadline, $idUser, $priority, $category);
 
-        return redirect()->action([TodoListController::class, 'todoList']);
+        return redirect()->action([TodoListController::class, 'todoList'])->with('success', 'Todo added successfully');
     }
 
     public function removeTodo(Request $request, string $todoId): RedirectResponse
     {
         $this->todolistService->removeTodo($todoId);
-        return redirect()->action([TodoListController::class, 'todoList']);
+        return redirect()->action([TodoListController::class, 'todoList'])->with('success', 'Todo deleted successfully');
     }
 
     public function editTodo(Request $request, string $todoId)
@@ -95,7 +104,6 @@ class TodoListController extends Controller
     {
         $todo = $request->input("todo");
         $description = $request->input("description");
-        $status = $request->input("status");
         $deadline = $request->input("deadline");
         $priority = $request->input("priority");
         $category = $request->input("category");
@@ -108,8 +116,8 @@ class TodoListController extends Controller
                 "error" => "Todo is required"
             ]);
         }
-        $this->todolistService->updateTodo($todoId, $todo, $description, $status, $deadline, $priority, $category);
-        return redirect()->action([TodoListController::class, 'todoList']);
+        $this->todolistService->updateTodo($todoId, $todo, $description, $deadline, $priority, $category);
+        return redirect()->action([TodoListController::class, 'todoList'])->with('success', 'Todo updated successfully');
     }
 
     public function findTodolist(string $todoId)
@@ -120,5 +128,15 @@ class TodoListController extends Controller
             "todolist" => $todolist,
 
         ]);
+    }
+
+    public function updateStatus(Request $request, string $todoId)
+    {
+        $newStatus = $request->input("status");
+
+        if (!empty($newStatus)) {
+            $this->todolistService->updateStatus($todoId, $newStatus);
+            return redirect()->action([TodoListController::class, 'todoList']);
+        }
     }
 }

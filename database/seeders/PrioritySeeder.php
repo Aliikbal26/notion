@@ -18,8 +18,13 @@ class PrioritySeeder extends Seeder
         //
         $priority = new Priority();
         $priority->id = "1";
+        $priority->name = "Primary";
+        $priority->description = "Description Priority Utama";
+        $priority->save();
+        $priority = new Priority();
+        $priority->id = "2";
         $priority->name = "Second";
-        $priority->description = "Description Priotity";
+        $priority->description = "Description Priority Kedua";
         $priority->save();
     }
 }

@@ -31,4 +31,13 @@ class UserServiceImpl implements UserService
         ]);
         $user->save();
     }
+
+    public function updateUser(string $userId, string $name)
+    {
+        $user = $this->findUserById($userId);
+        if ($user != null) {
+            $user->name = $name;
+            $user->save();
+        }
+    }
 }

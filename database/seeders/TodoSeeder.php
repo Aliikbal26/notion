@@ -18,9 +18,9 @@ class TodoSeeder extends Seeder
     {
         $todo = new Todo();
         $todo->id = "1";
-        $todo->todo = "Ali";
-        $todo->description = "Description Ali";
-        $todo->deadline = "26 April 2024";
+        $todo->todo = "Belajar Java Dasar";
+        $todo->description = "Belajar Dasar Dasar pemrograman menggunakan bahasa java bersama Programmer Zaman Now";
+        $todo->deadline = "2024-05-26";
         $todo->status = "On Progress";
         $todo->user_id = "1";
         $todo->category_id = "1";
@@ -28,13 +28,13 @@ class TodoSeeder extends Seeder
         $todo->save();
         $todo = new Todo();
         $todo->id = "2";
-        $todo->todo = "Todo 2";
-        $todo->description = "Description Todo 2";
-        $todo->deadline = "26 April 2024";
+        $todo->todo = "Belajar Spring Framework";
+        $todo->description = "Belajar Dasar Dasar Framework SpringBoot menggunakan bahasa java bersama Programmer Zaman Now";
+        $todo->deadline = "2024-05-12";
         $todo->status = "On Progress";
         $todo->user_id = "2";
-        $todo->category_id = "1";
-        $todo->priority_id = "1";
+        $todo->category_id = "2";
+        $todo->priority_id = "2";
         $todo->save();
     }
 }

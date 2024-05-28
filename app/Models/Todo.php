@@ -9,9 +9,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Todo extends Model
 {
+    /**
+     * Model Todo
+     */
     protected $table = "todoes";
-    // protected $primaryKey = "id";
-    // protected $keyType = "string";
     protected $guarded = [];
 
     protected $attributes = [

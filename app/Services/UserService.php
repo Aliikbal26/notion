@@ -9,4 +9,6 @@ interface UserService
     function findUserById(string $userId);
 
     function addUser(string $name, string $email, string $password): void;
+
+    function updateUser(string $userId, string $name);
 }

@@ -6,52 +6,63 @@
     <title>{{$title}}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{url('/assets/css/form.css')}}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 
 <body>
     <div class="container col-xl-10 col-xxl-8 px-4 py-5">
-        <div class="row justify-content-center g-lg-5">
-            <div class="col-lg-5">
-                @if(session('success'))
-                <div class="row">
-                    <div class="alert alert-success" role="alert">
-                        {{ session('success') }}
-                    </div>
-                </div>
-                @endif
-                @if(isset($error))
+        <!-- start section login -->
+        @if(session('success'))
+        <div class="row">
+            <div class="alert alert-success" role="alert">
+                {{ session('success') }}
+            </div>
+        </div>
+        @endif
+        @if(isset($error))
+        <div class="row justify-content-center">
+            <div class="col-md-7 text-center">
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>Error!</strong> {{$error}}
+                    <strong>Error !</strong> {{$error}}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
-                @endif
             </div>
         </div>
+        @endif
 
-        <div class="row align-items-center g-lg-5 py-2">
-            <h1 class="text-center">Create At Account</h1>
-            <div class="col-md-10 mx-auto col-lg-5">
-                <form class="p-4 p-md-5 border rounded-3 bg-light" method="post" action="/registrasi">
-                    @csrf
-                    <div class="form-floating mb-3">
-                        <input name="name" type="text" class="form-control" id="name" placeholder="id">
-                        <label for="name">Name</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input name="email" type="text" class="form-control" id="email" placeholder="id">
-                        <label for="email">Email</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input name="password" type="password" class="form-control" id="password" placeholder="password">
-                        <label for="password">Password</label>
-                    </div>
-                    <button class="w-100 btn btn-lg btn-primary" type="submit">Registrasi</button>
-                    <div class="row text-center mt-3">
-                        <span class="item-center"><a href="/login">Sign In</a></span>
-                    </div>
-                </form>
-            </div>
+        <div class="registration-form ">
+            <h1 class="text-center  my-3"> N<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-alexa" viewBox="0 0 16 16">
+                    <path d="M7.996 0A8 8 0 0 0 0 8a8 8 0 0 0 6.93 7.93v-1.613a1.06 1.06 0 0 0-.717-1.008A5.6 5.6 0 0 1 2.4 7.865 5.58 5.58 0 0 1 8.054 2.4a5.6 5.6 0 0 1 5.535 5.81l-.002.046-.012.192-.005.061a5 5 0 0 1-.033.284l-.01.068c-.685 4.516-6.564 7.054-6.596 7.068A7.998 7.998 0 0 0 15.992 8 8 8 0 0 0 7.996.001Z" />
+                </svg>ti<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-alexa" viewBox="0 0 16 16">
+                    <path d="M7.996 0A8 8 0 0 0 0 8a8 8 0 0 0 6.93 7.93v-1.613a1.06 1.06 0 0 0-.717-1.008A5.6 5.6 0 0 1 2.4 7.865 5.58 5.58 0 0 1 8.054 2.4a5.6 5.6 0 0 1 5.535 5.81l-.002.046-.012.192-.005.061a5 5 0 0 1-.033.284l-.01.068c-.685 4.516-6.564 7.054-6.596 7.068A7.998 7.998 0 0 0 15.992 8 8 8 0 0 0 7.996.001Z" />
+                </svg>n | Create At Account</h1>
+            <form method="post" action="/registrasi" class="shadow">
+                @csrf
+
+                <div class="form-group">
+                    <input type="text" class="form-control item" name="name" id="name" placeholder="Full Name">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control item" name="email" id="email" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control item" name="password" id="password" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-block create-account">Create Account</button>
+                </div>
+                <div class="social-media">
+                    <span class="item-center">Sudah Punya Akun ? <a href="/login">Sign In</a></span>
+                </div>
+            </form>
         </div>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+
+        <!-- end section login -->
+
     </div>
 </body>
 
