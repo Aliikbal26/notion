@@ -5,6 +5,22 @@
 ### Kelas : Full Stack 6,
 #### Description : Aplikasi untuk membantu pengguna dalam mengatur dan melacak tugas-tugas. Pengguna dapat membuat daftar tugas, menetapkan deadline, dan menandai tugas yang sudah selesai.
 
+## FITUR APLIKASI
+### Rigstrasi
+Fitur Registrasi dibuat untuk menambahkan user baru. Dengan fitur ini, pengguna dapat membuat akun baru dengan mudah dan mulai menggunakan aplikasi.
+### Login
+Fitur Login digunakan untuk masuk pada aplikasi. Pengguna dapat mengakses akun mereka dengan memasukkan username dan password yang telah terdaftar.
+### Home
+Fitur Home adalah tampilan awal saat user baru masuk. Halaman ini berisikan semua daftar tugas (todolist) yang telah ditambahkan oleh pengguna, memungkinkan mereka untuk melihat dan mengelola tugas-tugas mereka dengan mudah.
+### Add Todo
+Fitur Add Todo memungkinkan pengguna untuk menambahkan tugas baru ke dalam daftar tugas mereka. Pengguna dapat mengisi deskripsi tugas, menetapkan kategori, dan prioritas untuk setiap tugas.
+### Update Todo
+Fitur Update Todo digunakan untuk memperbarui informasi tentang tugas yang sudah ada. Pengguna dapat mengedit deskripsi, kategori, dan prioritas tugas sesuai kebutuhan.
+### Add Category
+Fitur Add Category memungkinkan pengguna untuk menambahkan kategori baru untuk mengorganisir tugas-tugas mereka. Dengan menambahkan kategori, pengguna dapat mengelompokkan tugas berdasarkan jenis atau konteks tertentu.
+### Add Priority
+Fitur Add Priority digunakan untuk menetapkan tingkat kepentingan atau urgensi pada setiap tugas. Pengguna dapat menentukan prioritas tinggi, menengah, atau rendah untuk membantu mereka fokus pada tugas yang paling penting terlebih dahulu.
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">

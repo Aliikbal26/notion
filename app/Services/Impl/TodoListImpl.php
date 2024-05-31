@@ -45,7 +45,7 @@ class TodoListImpl implements TodoListService
     }
 
 
-    public function updateTodo(string $todoId, ?string $newTodo, ?string $description, ?string $deadline, ?string $priority_id, ?string $category_id)
+    public function updateTodo(string $todoId, string $newTodo, string $description, string $deadline, string $priority_id, string $category_id)
     {
         $todo = $this->findTodoById($todoId);
         if ($todo != null) {
@@ -63,7 +63,9 @@ class TodoListImpl implements TodoListService
 
     public function updateStatus(string $todoId, string $newStatus)
     {
-        $todo = $this->findTodoById($todoId);
+        // $todo = $this->findTodoById($todoId);
+        $todo = Todo::find($todoId);
+
         if ($todo != null) {
             $todo->status = $newStatus;
             $todo->save();

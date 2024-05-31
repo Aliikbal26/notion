@@ -15,7 +15,7 @@ interface TodoListService
 
     public function updateStatus(string $todoId, string $newStatus);
 
-    public function updateTodo(string $todoId, ?string $newTodo, ?string $description, ?string $deadline, ?string $priority_id, ?string $category_id);
+    public function updateTodo(string $todoId, string $newTodo, string $description, string $deadline, string $priority_id, string $category_id);
 
     public function deadline(string $todoId);
 }

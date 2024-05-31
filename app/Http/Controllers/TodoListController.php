@@ -4,13 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Priority;
-use App\Models\Todo;
 use App\Models\User;
 use App\Services\CategoryService;
 use App\Services\PriorityService;
 use App\Services\TodoListService;
-use App\Services\UserService;
-use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,25 +31,55 @@ class TodoListController extends Controller
     public function todo()
     {
         $todolist = $this->todolistService->getTodolist();
+
+        // Iterasi melalui setiap todo item
+        foreach ($todolist as $todo) {
+            $todoId = $todo['id'];
+            $deadline = $todo['deadline'];
+            $status = $todo['status'];
+
+            // Periksa jika deadline sudah lewat dan status masih "On Progress"
+            if ($deadline < now()->format('Y-m-d') && $status == 'On Progress') {
+                // Perbarui status menjadi "Filed"
+                $this->todolistService->updateStatus($todoId, 'Failed');
+            }
+        }
+        $todolist1 = $this->todolistService->getTodolist();
         $id = Auth::id();
         $user = User::query()->where(['id' => $id])->find($id);
         return response()->view("template.landingPage", [
             "title" => "Home",
-            "todolist" => $todolist,
+            "todolist" => $todolist1,
             "name" => $user,
         ]);
     }
 
-    public function todoList(Request $request)
+    public function todoList()
     {
+        // Ambil semua todo list
         $todolist = $this->todolistService->getTodolist();
+
+        // Iterasi melalui setiap todo item
+        foreach ($todolist as $todo) {
+            $todoId = $todo['id'];
+            $deadline = $todo['deadline'];
+            $status = $todo['status'];
+
+            // Periksa jika deadline sudah lewat dan status masih "On Progress"
+            if ($deadline < now()->format('Y-m-d') && $status == 'On Progress') {
+                // Perbarui status menjadi "Failed"
+                $this->todolistService->updateStatus($todoId, 'Failed');
+            }
+        }
+
+        $todolist2 = $this->todolistService->getTodolist();
         $prioritas = $this->priorityService->getPriority();
         $category = $this->categoryService->getCategory();
         return response()->view("todolist.todolist", [
             "title" => "Todolist",
-            "todolist" => $todolist,
+            "todolist" => $todolist2,
             "priority" => $prioritas,
-            "category" => $category
+            "category" => $category,
         ]);
     }
 
@@ -107,6 +134,15 @@ class TodoListController extends Controller
         $deadline = $request->input("deadline");
         $priority = $request->input("priority");
         $category = $request->input("category");
+
+        $todolist = $this->todolistService->findTodoById($todoId);
+        $statusTodo = $todolist['status'];
+
+        // Periksa jika deadline sudah lewat dan status masih "On Progress"
+        if ($deadline >= now()->format('Y-m-d') && $statusTodo == 'Failed') {
+            // Perbarui status menjadi "on progress"
+            $this->todolistService->updateStatus($todoId, 'On Progress');
+        }
 
         if (empty($todo)) {
             $todolist = $this->todolistService->getTodolist();
